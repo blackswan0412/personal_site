@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=EB+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #0f0f0e;
       --text: #e0ded6;
@@ -22,7 +21,6 @@
       --left-w: 280px;
       --gap: 80px;
     }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -32,7 +30,6 @@
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
     }
-
     /* ── Two-column layout ── */
     .layout {
       display: grid;
@@ -43,13 +40,11 @@
       padding: 52px 48px 100px;
       align-items: start;
     }
-
     /* ── LEFT SIDEBAR (sticky) ── */
     .sidebar {
       position: sticky;
       top: 52px;
     }
-
     .hero-name {
       font-family: var(--serif);
       font-style: italic;
@@ -60,7 +55,6 @@
       color: var(--text);
       margin-bottom: 24px;
     }
-
     .hero-tagline {
       font-family: var(--mono);
       font-size: 13px;
@@ -68,7 +62,6 @@
       margin-bottom: 20px;
       letter-spacing: 0.01em;
     }
-
     .top-email {
       font-family: var(--mono);
       font-size: 13px;
@@ -76,7 +69,6 @@
       margin-bottom: 28px;
       letter-spacing: 0.01em;
     }
-
     /* blinking cursor */
     .cursor-blink {
       display: inline-block;
@@ -88,9 +80,8 @@
     .cursor-blink.done { opacity: 0; animation: none; }
     @keyframes blink {
       0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
+      50% { opacity: 0; }
     }
-
     /* ── Photo ── */
     .photo-wrap {
       width: 100%;
@@ -100,7 +91,6 @@
       display: block;
       margin-bottom: 28px;
     }
-
     /* ── ELSEWHERE ── */
     .sidebar-section-title {
       font-family: var(--mono);
@@ -110,12 +100,10 @@
       letter-spacing: 0.04em;
       margin-bottom: 8px;
     }
-
     .elsewhere {
       display: flex;
       flex-direction: column;
     }
-
     .ext-link {
       font-family: var(--mono);
       font-size: 13px;
@@ -131,15 +119,12 @@
     }
     .ext-link:hover { color: #fff; }
     .ext-link .arr { font-size: 11px; opacity: 0.65; }
-
     /* ── RIGHT COLUMN ── */
     .content {}
-
     /* ── Section ── */
     .section {
       margin-bottom: 64px;
     }
-
     .section-title {
       font-family: var(--mono);
       font-size: 14px;
@@ -148,27 +133,23 @@
       letter-spacing: 0.01em;
       margin-bottom: 10px;
     }
-
     .dotted-rule {
       border: none;
       border-top: 1px dotted var(--dot);
       margin-bottom: 28px;
     }
-
     /* ── Numbered entries ── */
     .entry-list {
       display: flex;
       flex-direction: column;
       gap: 40px;
     }
-
     .entry-num {
       font-family: var(--mono);
       font-size: 13px;
       color: var(--muted);
       margin-bottom: 7px;
     }
-
     .entry-main {
       font-family: var(--mono);
       font-size: 14px;
@@ -176,14 +157,12 @@
       line-height: 1.55;
       margin-bottom: 4px;
     }
-
     .entry-sub {
       font-family: var(--mono);
       font-size: 14px;
       color: var(--muted);
       line-height: 1.55;
     }
-
     .ilink {
       color: var(--text);
       text-decoration: none;
@@ -197,7 +176,6 @@
       margin-left: 1px;
       opacity: 0.65;
     }
-
     .bullets {
       list-style: none;
       margin-top: 8px;
@@ -221,7 +199,6 @@
       flex-shrink: 0;
       opacity: 0.6;
     }
-
     /* ── Big bottom line ── */
     .big-line {
       font-family: var(--mono);
@@ -232,14 +209,12 @@
       color: var(--text);
       margin-top: 48px;
     }
-
     /* ── Fade-in ── */
     .fade-in {
       opacity: 0;
       transition: opacity 1.2s ease;
     }
     .fade-in--visible { opacity: 1; }
-
     /* ── Live clock ── */
     .live-clock {
       position: fixed;
@@ -267,7 +242,6 @@
       text-transform: uppercase;
       margin-top: 2px;
     }
-
     /* ── Responsive ── */
     @media (max-width: 720px) {
       .layout {
@@ -283,30 +257,22 @@
   </style>
 </head>
 <body>
-
   <!-- Live clock -->
   <div class="live-clock">
     <span class="clock-time" id="clock-time"></span>
-    <span class="clock-label">Berkeley, CA</span>
+    <span class="clock-label">Bay Area, CA</span>
   </div>
-
   <div class="layout">
-
     <!-- ── LEFT SIDEBAR ── -->
     <aside class="sidebar">
-
       <div class="hero-name" id="hero-name-wrap">
         <span id="typewriter-name"></span>
       </div>
-
-      <div class="hero-tagline fade-in" id="tagline">Building for human connection.</div>
-
+      <div class="hero-tagline fade-in" id="tagline">Studying how humans decide, connect, and forecast together.</div>
       <div class="top-email fade-in" id="email-line">
         <span id="typewriter-email"></span><span class="cursor-blink" id="cursor-blink-email">|</span>
       </div>
-
       <img src="headshot.png" alt="Angel Yeung" class="photo-wrap fade-in">
-
       <div class="section fade-in">
         <div class="sidebar-section-title">ELSEWHERE</div>
         <div class="elsewhere">
@@ -316,37 +282,50 @@
           <a href="https://substack.com/@yourusername" target="_blank" class="ext-link">substack <span class="arr">↗</span></a>
         </div>
       </div>
-
     </aside>
-
     <!-- ── RIGHT CONTENT ── -->
     <main class="content">
-
       <!-- CURRENTLY -->
       <div class="section fade-in">
         <div class="section-title">Currently</div>
         <hr class="dotted-rule">
         <div class="entry-list">
-
           <div class="entry">
             <div class="entry-num">01</div>
             <div class="entry-main">
               Partnerships &amp; External Relations @
               <a href="https://www.berkeleypse.com/" class="ilink">Pi Sigma Epsilon <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Driving outreach, sponsorships, and events for Berkeley's consulting community</div>
+            <div class="entry-sub">Driving sponsorships, events, and industry connections for Berkeley’s premier business fraternity</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">02</div>
             <div class="entry-main">
-              Analytics @
+              Analytics &amp; Data Science @
               <a href="https://berkeley.edu" target="_blank" class="ilink">UC Berkeley <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Senior · Graduating May 2027</div>
+            <div class="entry-sub">Senior · Expected Graduation May 2027</div>
           </div>
-
+          <div class="entry">
+            <div class="entry-num">03</div>
+            <div class="entry-main">
+              Independent Research
+            </div>
+            <div class="entry-sub">Prediction markets, collective intelligence, and human forecasting behavior</div>
+          </div>
         </div>
+      </div>
+
+      <!-- NARRATIVE / ABOUT -->
+      <div class="section fade-in">
+        <div class="section-title">Throughline</div>
+        <hr class="dotted-rule">
+        <p style="max-width: 65ch; font-size: 14px; line-height: 1.65; color: var(--text);">
+          I study the systems that shape how we <strong>connect</strong>, <strong>decide</strong>, and <strong>anticipate</strong> the future together. 
+          From building social products that foster genuine interaction to designing AI tools for mental health, I’ve seen how technology can either amplify or distort human behavior. 
+          Today, I’m especially drawn to <strong>prediction markets</strong> and forecasting — mechanisms that turn individual uncertainty into collective clarity. 
+          They sit at the intersection of psychology, markets, and technology: the ultimate expression of distributed human intelligence.
+        </p>
       </div>
 
       <!-- PREVIOUSLY -->
@@ -354,92 +333,80 @@
         <div class="section-title">Previously</div>
         <hr class="dotted-rule">
         <div class="entry-list">
-
           <div class="entry">
             <div class="entry-num">01</div>
             <div class="entry-main">
               AI Product Fellow @
               <a href="https://med.stanford.edu/psychiatry.html" class="ilink">Stanford Medicine <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Co-developed an AI mental health app from research through early prototype</div>
+            <div class="entry-sub">Co-developed an AI-powered mental health tool from research to early prototype</div>
             <ul class="bullets">
-              <li>Defined product strategy and clinical UX flows</li>
-              <li>Led user research and early-stage go-to-market thesis</li>
+              <li>Defined product strategy, clinical UX, and go-to-market approach</li>
+              <li>Led user research on how people engage with AI around sensitive personal decisions</li>
             </ul>
           </div>
-
           <div class="entry">
             <div class="entry-num">02</div>
             <div class="entry-main">
               Marketing &amp; Growth @
               <a href="https://www.gamerplug.app/en" class="ilink">GamerPlug <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Gamer matchmaking platform · interaction-led growth strategy</div>
+            <div class="entry-sub">Social matchmaking platform for gamers</div>
             <ul class="bullets">
-              <li>Built a lowkey, interaction-first user acquisition model</li>
-              <li>Focused retention through genuine social connection</li>
+              <li>Designed interaction-first acquisition and retention loops</li>
+              <li>Focused on authentic connection rather than viral dopamine hits</li>
             </ul>
           </div>
-
           <div class="entry">
             <div class="entry-num">03</div>
             <div class="entry-main">
-              Customer Research Intern @ <a href="#" class="ilink">Nissan <span class="arr">↗</span></a>
+              Customer Research Intern @ Nissan
             </div>
-            <div class="entry-sub">Qualitative and quantitative research on user behavior and brand perception</div>
+            <div class="entry-sub">Qualitative + quantitative studies on decision-making and brand perception</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">04</div>
             <div class="entry-main">
-              Sales Associate @ <a href="#" class="ilink">Tory Burch <span class="arr">↗</span></a>
+              Sales Associate @ Tory Burch
             </div>
-            <div class="entry-sub">High-touch client experience in luxury retail</div>
+            <div class="entry-sub">High-touch client experience and real-time reading of human needs</div>
           </div>
-
         </div>
       </div>
 
       <!-- PROJECTS -->
       <div class="section fade-in">
-        <div class="section-title">Projects</div>
+        <div class="section-title">Projects &amp; Research</div>
         <hr class="dotted-rule">
         <div class="entry-list">
-
           <div class="entry">
             <div class="entry-num">01</div>
             <div class="entry-main">
-              <a href="#" class="ilink">Showcase Build Sprint <span class="arr">↗</span></a>
+              <a href="#" class="ilink">Prediction Market Experiments <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Campus case competition driving student adoption of a portfolio platform</div>
-            <ul class="bullets">
-              <li>Designed GTM strategy for Berkeley's builder ecosystem</li>
-              <li>Coordinated across CS orgs, consulting clubs, and design groups</li>
-            </ul>
+            <div class="entry-sub">Ongoing personal research on forecasting accuracy, calibration, and market design</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">02</div>
             <div class="entry-main">
               <a href="#" class="ilink">Linguistic Twin <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">AI legacy product — preserving and extending a person's voice across time</div>
-            <ul class="bullets">
-              <li>Conceptualized identity, memory, and language continuity system</li>
-            </ul>
+            <div class="entry-sub">AI system for preserving and extending personal voice, memory, and identity over time</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">03</div>
             <div class="entry-main">
-              <a href="#" class="ilink">Kikoff Case Competition <span class="arr">↗</span></a>
+              <a href="#" class="ilink">Showcase Build Sprint <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Strategy consulting deliverable for a credit-building fintech platform</div>
-            <ul class="bullets">
-              <li>Produced pitch deck, presenter scripts, and risk/mitigation analysis</li>
-            </ul>
+            <div class="entry-sub">Led campus-wide case competition to drive adoption of a student portfolio platform</div>
           </div>
-
+          <div class="entry">
+            <div class="entry-num">04</div>
+            <div class="entry-main">
+              Kikoff Strategy Case
+            </div>
+            <div class="entry-sub">End-to-end consulting deliverable (deck + risk analysis) for credit-building fintech</div>
+          </div>
         </div>
       </div>
 
@@ -448,48 +415,41 @@
         <div class="section-title">Writing</div>
         <hr class="dotted-rule">
         <div class="entry-list">
-
           <div class="entry">
             <div class="entry-num">01</div>
             <div class="entry-main">
               <a href="#" class="ilink">Why Social Platforms Became Loneliness Brokers <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">The incentive structure that turned connection tools into engagement machines</div>
+            <div class="entry-sub">Incentive structures that optimize for engagement over connection</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">02</div>
             <div class="entry-main">
               <a href="#" class="ilink">Anti-Stagnation Technology <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Products that push you outward, not inward — a personal product manifesto</div>
+            <div class="entry-sub">Tools that pull us outward into the world and into better decisions</div>
           </div>
-
           <div class="entry">
             <div class="entry-num">03</div>
             <div class="entry-main">
-              <a href="#" class="ilink">The Experience Economy Hasn't Been Redesigned for Gen Z <span class="arr">↗</span></a>
+              <a href="#" class="ilink">Prediction Markets as Social Technology <span class="arr">↗</span></a>
             </div>
-            <div class="entry-sub">Pine &amp; Gilmore's 1999 playbook and what needs to change</div>
+            <div class="entry-sub">How betting on the future reveals and improves collective reasoning (in progress)</div>
           </div>
-
         </div>
       </div>
 
-      <div class="big-line fade-in">BUILDING FOR<br>HUMAN CONNECTION.</div>
-
+      <div class="big-line fade-in">UNDERSTANDING HOW<br>WE DECIDE TOGETHER.</div>
     </main>
   </div>
 
   <script>
     window.addEventListener("load", () => {
-
       // ── Typewriter: name (100ms/char, each word on its own line) ──
       const nameParts = ["Angel", "Yeung"];
       const nameEl = document.getElementById("typewriter-name");
       let charIndex = 0;
       let wordIndex = 0;
-
       function typeName() {
         if (wordIndex < nameParts.length) {
           const word = nameParts[wordIndex];
@@ -504,13 +464,11 @@
               nameEl.appendChild(document.createElement("br"));
               setTimeout(typeName, 120);
             } else {
-              // Name done — pause then type email
               setTimeout(typeEmail, 300);
             }
           }
         }
       }
-
       // ── Typewriter: email (50ms/char) ──
       function typeEmail() {
         const email = "angelyeung@berkeley.edu";
@@ -518,9 +476,7 @@
         const emailCursor = document.getElementById("cursor-blink-email");
         const emailLine = document.getElementById("email-line");
         let j = 0;
-
         emailLine.classList.add("fade-in--visible");
-
         function typeChar() {
           if (j < email.length) {
             emailEl.textContent += email[j];
@@ -535,7 +491,6 @@
         }
         typeChar();
       }
-
       // ── Staggered fade-in for everything else ──
       function startFadeIns() {
         const elements = [...document.querySelectorAll(".fade-in")]
@@ -546,10 +501,8 @@
           }, 300 * index);
         });
       }
-
       setTimeout(typeName, 200);
-
-      // ── Live clock — Berkeley ──
+      // ── Live clock — Bay Area ──
       function updateClock() {
         const time = new Date().toLocaleTimeString('en-US', {
           timeZone: 'America/Los_Angeles',
@@ -564,6 +517,5 @@
       setInterval(updateClock, 1000);
     });
   </script>
-
 </body>
 </html>
