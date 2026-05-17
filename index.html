@@ -255,6 +255,16 @@
 
             <div class="entry">
               <div class="entry-num">03</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="kikoff">Strategy Consultant @
+                  <a href="https://kikoff.com/" target="_blank" class="ilink" onclick="event.stopPropagation()">Kikoff <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">End-to-end strategy deliverable for credit-building fintech · Feb 2026</div>
+            </div>
+
+            <div class="entry">
+              <div class="entry-num">04</div>
               <div class="entry-main">Sales Associate @ Tory Burch</div>
               <div class="entry-sub">High-touch client experience and real-time reading of human needs</div>
             </div>
@@ -272,7 +282,7 @@
               <div class="entry-num">01</div>
               <div class="entry-main">
                 <span class="sublink" data-id="sonder">Sonder OS @
-                  <a href="https://foundersinc.com" target="_blank" class="ilink" onclick="event.stopPropagation()">Founders Inc <span class="arr">↗</span></a>
+                  <a href="https://f.inc/" target="_blank" class="ilink" onclick="event.stopPropagation()">Founders Inc <span class="arr">↗</span></a>
                 <span class="sarr">→</span></span>
               </div>
               <div class="entry-sub">Personal AI decision assistant over a relational knowledge graph · Mar 2026 – Present</div>
@@ -312,14 +322,6 @@
               </ul>
             </div>
 
-            <div class="entry">
-              <div class="entry-num">05</div>
-              <div class="entry-main">
-                <span class="sublink" data-id="kikoff">Kikoff Strategy Case<span class="sarr">→</span></span>
-              </div>
-              <div class="entry-sub">End-to-end consulting deliverable (deck + risk analysis) for credit-building fintech</div>
-            </div>
-
           </div>
         </div>
 
@@ -332,29 +334,13 @@
             <div class="entry">
               <div class="entry-num">01</div>
               <div class="entry-main">
-                <span class="sublink" data-id="writing-loneliness">Why Social Platforms Became Loneliness Brokers<span class="sarr">→</span></span>
-              </div>
-              <div class="entry-sub">Incentive structures that optimize for engagement over connection — and what better-designed systems would look like</div>
-            </div>
-
-            <div class="entry">
-              <div class="entry-num">02</div>
-              <div class="entry-main">
-                <span class="sublink" data-id="writing-stagnation">Anti-Stagnation Technology<span class="sarr">→</span></span>
-              </div>
-              <div class="entry-sub">Tools that pull us outward into the world and into better decisions</div>
-            </div>
-
-            <div class="entry">
-              <div class="entry-num">03</div>
-              <div class="entry-main">
                 <span class="sublink" data-id="writing-pm">Prediction Markets as Coordination Infrastructure<span class="sarr">→</span></span>
               </div>
               <div class="entry-sub">How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure — in progress</div>
             </div>
 
             <div class="entry">
-              <div class="entry-num">04</div>
+              <div class="entry-num">02</div>
               <div class="entry-main">
                 <span class="sublink" data-id="writing-bots">What Bots Reveal About Human Forecasters<span class="sarr">→</span></span>
               </div>
@@ -458,19 +444,12 @@
       ],
       tags: ['Growth Strategy', 'Retention Design', 'Incentive Alignment', 'Consumer Social'],
     },
-    nissan: {
-      eyebrow: 'Previously',
-      title: 'Customer Research\nIntern',
-      meta: ['Nissan', 'Qualitative + Quantitative Research'],
-      sections: [
-        { label: 'Work', text: "Conducted mixed-methods studies on decision-making and brand perception — first systematic exposure to how qualitative insight and quantitative signal either corroborate or contradict each other, and what to do when they don't agree." },
-      ],
-      tags: ['Mixed Methods', 'Consumer Research', 'Brand Perception', 'Decision Making'],
-    },
     sonder: {
       eyebrow: 'Project · Mar 2026 – Present',
       title: 'Sonder OS',
       meta: ['Founders Inc', 'Personal AI Decision Assistant'],
+      externalUrl: 'https://f.inc/',
+      externalLabel: 'f.inc',
       sections: [
         { label: 'The Problem', text: "Most AI assistants treat your information as a flat pile of text. The interesting reasoning happens across connections — between a calendar commitment and an email thread, between a past decision and a current investment thesis. Flat-index RAG cannot answer multi-hop questions because it has no model of how your information is related." },
         { label: 'What I Built', text: "A unified ~10,000-item vector index over emails, documents, calendar, notes, and crawled web content. GraphRAG-style retrieval over entity–relation extractions enables multi-hop queries across connected sources. Multi-agent workflows for research, planning, and investing decisions, with agent traces evaluated for calibration and faithfulness against held-out outcomes." },
@@ -501,9 +480,11 @@
       tags: ['Smart Contracts', 'L2 / Testnet', 'Mechanism Design', 'Liquidity Design', 'Calibration'],
     },
     kikoff: {
-      eyebrow: 'Project · Feb 2026',
-      title: 'Kikoff Fintech\nCase Competition',
-      meta: ['UC Berkeley', 'Credit-Building Fintech'],
+      eyebrow: 'Previously · Feb 2026',
+      title: 'Strategy Consultant',
+      meta: ['Kikoff', 'Credit-Building Fintech'],
+      externalUrl: 'https://kikoff.com/',
+      externalLabel: 'kikoff.com',
       metrics: [{ val: '$40M', label: 'Opportunity Identified' }, { val: '12%', label: 'Projected Default Rate Reduction' }],
       sections: [
         { label: 'Work', text: "End-to-end consulting deliverable for Kikoff. Identified a $40M subprime credit opportunity for thin-file users and built a quantitative risk model projecting a 12% reduction in default rates via calibrated underwriting." },
@@ -511,7 +492,15 @@
       ],
       tags: ['Credit Risk', 'Underwriting', 'Quantitative Modeling', 'Unit Economics', 'Fintech'],
     },
-
+    'writing-pm': {
+      eyebrow: 'Writing · In Progress',
+      title: 'Prediction Markets\nas Coordination\nInfrastructure',
+      meta: [],
+      sections: [
+        { label: 'Argument', text: "How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure. The bottleneck isn't interest or information — it's mechanism quality and settlement friction." },
+      ],
+      tags: ['Prediction Markets', 'Mechanism Design', 'Blockchain', 'Coordination'],
+    },
     'writing-pm': {
       eyebrow: 'Writing · In Progress',
       title: 'Prediction Markets\nas Coordination\nInfrastructure',
