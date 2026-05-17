@@ -7,553 +7,638 @@
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=EB+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=EB+Garamond:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0f0f0e;
       --text: #e0ded6;
       --muted: #7a7870;
-      --dot: rgba(255,255,255,0.18);
+      --faint: #2a2925;
+      --accent: #c8b89a;
+      --dot: rgba(255,255,255,0.13);
       --link-dot: rgba(255,255,255,0.28);
       --mono: 'IBM Plex Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
       --serif: 'EB Garamond', Georgia, serif;
       --left-w: 280px;
       --gap: 80px;
     }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 14px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
-    }
-    /* ── Two-column layout ── */
-    .layout {
-      display: grid;
-      grid-template-columns: var(--left-w) 1fr;
-      gap: var(--gap);
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 52px 48px 100px;
-      align-items: start;
-    }
-    /* ── LEFT SIDEBAR (sticky) ── */
-    .sidebar {
-      position: sticky;
-      top: 52px;
-    }
-    .hero-name {
-      font-family: var(--serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: 64px;
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 24px;
-    }
-    .hero-tagline {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--text);
-      margin-bottom: 20px;
-      letter-spacing: 0.01em;
-    }
-    .top-email {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--text);
-      margin-bottom: 28px;
-      letter-spacing: 0.01em;
-    }
-    /* blinking cursor */
-    .cursor-blink {
-      display: inline-block;
-      color: var(--text);
-      animation: blink 1s step-end infinite;
-      margin-left: 1px;
-      font-weight: 400;
-    }
+    body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 14px; line-height: 1.6; -webkit-font-smoothing: antialiased; min-height: 100vh; overflow-x: hidden; }
+
+    /* ── VIEWS ── */
+    .view { display: none; }
+    .view.active { display: block; }
+
+    /* ── INDEX LAYOUT ── */
+    #view-index .layout { display: grid; grid-template-columns: var(--left-w) 1fr; gap: var(--gap); max-width: 1100px; margin: 0 auto; padding: 52px 48px 120px; align-items: start; }
+    .sidebar { position: sticky; top: 52px; }
+    .hero-name { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 64px; line-height: 1.0; letter-spacing: -0.01em; color: var(--text); margin-bottom: 24px; }
+    .hero-tagline { font-size: 13px; color: var(--text); margin-bottom: 20px; letter-spacing: 0.01em; }
+    .top-email { font-size: 13px; color: var(--text); margin-bottom: 28px; letter-spacing: 0.01em; }
+    .cursor-blink { display: inline-block; color: var(--text); animation: blink 1s step-end infinite; margin-left: 1px; }
     .cursor-blink.done { opacity: 0; animation: none; }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    /* ── Photo ── */
-    .photo-wrap {
-      width: 100%;
-      max-width: var(--left-w);
-      aspect-ratio: 1 / 1;
-      object-fit: cover;
-      display: block;
-      margin-bottom: 28px;
-    }
-    /* ── ELSEWHERE ── */
-    .sidebar-section-title {
-      font-family: var(--mono);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: 0.04em;
-      margin-bottom: 8px;
-    }
-    .elsewhere {
-      display: flex;
-      flex-direction: column;
-    }
-    .ext-link {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--link-dot);
-      padding: 6px 0;
-      width: fit-content;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.15s;
-    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .photo-wrap { width: 100%; max-width: var(--left-w); aspect-ratio: 1/1; object-fit: cover; display: block; margin-bottom: 28px; }
+    .sidebar-section-title { font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: 0.04em; margin-bottom: 8px; }
+    .elsewhere { display: flex; flex-direction: column; }
+    .ext-link { font-size: 13px; color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--link-dot); padding: 6px 0; width: fit-content; display: inline-flex; align-items: center; gap: 4px; transition: color 0.15s; }
     .ext-link:hover { color: #fff; }
     .ext-link .arr { font-size: 11px; opacity: 0.65; }
-    /* ── RIGHT COLUMN ── */
-    .content {}
-    /* ── Section ── */
-    .section {
-      margin-bottom: 64px;
-    }
-    .section-title {
-      font-family: var(--mono);
-      font-size: 14px;
-      font-weight: 400;
-      color: var(--text);
-      letter-spacing: 0.01em;
-      margin-bottom: 10px;
-    }
-    .dotted-rule {
-      border: none;
-      border-top: 1px dotted var(--dot);
-      margin-bottom: 28px;
-    }
-    /* ── Numbered entries ── */
-    .entry-list {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-    .entry-num {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-    .entry-main {
-      font-family: var(--mono);
-      font-size: 14px;
-      color: var(--text);
-      line-height: 1.55;
-      margin-bottom: 4px;
-    }
-    .entry-sub {
-      font-family: var(--mono);
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .ilink {
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px dotted var(--link-dot);
-      transition: border-color 0.15s;
-    }
+
+    /* ── SECTIONS ── */
+    .section { margin-bottom: 64px; }
+    .section-title { font-size: 14px; font-weight: 400; color: var(--text); letter-spacing: 0.01em; margin-bottom: 10px; }
+    .dotted-rule { border: none; border-top: 1px dotted var(--dot); margin-bottom: 28px; }
+
+    /* ── ENTRY LIST (original style) ── */
+    .entry-list { display: flex; flex-direction: column; gap: 40px; }
+    .entry-num { font-size: 13px; color: var(--muted); margin-bottom: 7px; }
+    .entry-main { font-size: 14px; color: var(--text); line-height: 1.55; margin-bottom: 4px; }
+    .entry-sub { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── ILINK (external, dotted underline) ── */
+    .ilink { color: var(--text); text-decoration: none; border-bottom: 1px dotted var(--link-dot); transition: border-color 0.15s; }
     .ilink:hover { border-bottom-color: var(--text); }
-    .ilink .arr {
-      font-size: 10px;
-      vertical-align: super;
-      margin-left: 1px;
-      opacity: 0.65;
-    }
-    .bullets {
-      list-style: none;
-      margin-top: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .bullets li {
-      font-family: var(--mono);
-      font-size: 13px;
-      color: var(--muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.5;
-    }
-    .bullets li::before {
-      content: '▸';
-      font-size: 9px;
-      margin-top: 4px;
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-    /* ── Big bottom line ── */
-    .big-line {
-      font-family: var(--mono);
-      font-weight: 700;
-      font-size: clamp(22px, 3.5vw, 40px);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-top: 48px;
-    }
-    /* ── Fade-in ── */
-    .fade-in {
-      opacity: 0;
-      transition: opacity 1.2s ease;
-    }
+    .ilink .arr { font-size: 10px; vertical-align: super; margin-left: 1px; opacity: 0.65; }
+
+    /* ── SUBPAGE LINK (internal → subpage) ── */
+    .sublink { color: var(--text); text-decoration: none; transition: opacity 0.15s; cursor: pointer; }
+    .sublink:hover { opacity: 0.65; }
+    .sublink .sarr { font-size: 12px; margin-left: 5px; opacity: 0; transition: opacity 0.15s; }
+    .sublink:hover .sarr { opacity: 0.6; }
+
+    /* ── BULLETS ── */
+    .bullets { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 3px; }
+    .bullets li { font-size: 13px; color: var(--muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+    .bullets li::before { content: '▸'; font-size: 9px; margin-top: 4px; flex-shrink: 0; opacity: 0.6; }
+
+    /* ── BIG LINE ── */
+    .big-line { font-weight: 700; font-size: clamp(22px, 3.5vw, 40px); line-height: 1.1; letter-spacing: -0.02em; color: var(--text); margin-top: 48px; }
+
+    /* ── FADE IN ── */
+    .fade-in { opacity: 0; transition: opacity 1.2s ease; }
     .fade-in--visible { opacity: 1; }
-    /* ── Live clock ── */
-    .live-clock {
-      position: fixed;
-      top: 52px;
-      right: 48px;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      line-height: 1.5;
-      text-align: right;
-      pointer-events: none;
-      z-index: 10;
-    }
-    .clock-time {
-      display: block;
-      color: var(--text);
-      font-size: 12px;
-    }
-    .clock-label {
-      display: block;
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-top: 2px;
-    }
-    /* ── Responsive ── */
+
+    /* ── LIVE CLOCK ── */
+    .live-clock { position: fixed; top: 52px; right: 48px; font-size: 11px; color: var(--muted); letter-spacing: 0.04em; line-height: 1.5; text-align: right; pointer-events: none; z-index: 100; }
+    .clock-time { display: block; color: var(--text); font-size: 12px; }
+    .clock-label { display: block; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── DETAIL VIEW ── */
+    #view-detail { max-width: 780px; margin: 0 auto; padding: 52px 48px 120px; animation: slideIn 0.3s ease; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); cursor: pointer; border: none; background: none; font-family: var(--mono); letter-spacing: 0.04em; margin-bottom: 52px; padding: 0; transition: color 0.15s; }
+    .back-btn:hover { color: var(--text); }
+    .detail-eyebrow { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+    .detail-title { font-family: var(--serif); font-style: italic; font-size: 52px; line-height: 1.05; color: var(--text); margin-bottom: 8px; }
+    .detail-meta { font-size: 12px; color: var(--muted); margin-bottom: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
+    .detail-meta span::before { content: '— '; opacity: 0.4; }
+    .metric-row { display: flex; gap: 40px; flex-wrap: wrap; margin-bottom: 44px; padding-bottom: 44px; border-bottom: 1px dotted var(--dot); }
+    .metric-val { font-family: var(--serif); font-style: italic; font-size: 40px; line-height: 1; color: var(--accent); display: block; margin-bottom: 4px; }
+    .metric-label { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+    .detail-section { margin-bottom: 32px; }
+    .detail-label { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+    .detail-text { font-size: 14px; line-height: 1.78; color: var(--text); max-width: 62ch; }
+    .detail-hr { border: none; border-top: 1px dotted var(--faint); margin: 28px 0; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 40px; padding-top: 28px; border-top: 1px dotted var(--dot); }
+    .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--faint); padding: 3px 9px; letter-spacing: 0.04em; }
+    .detail-nav { display: flex; justify-content: space-between; margin-top: 64px; padding-top: 24px; border-top: 1px dotted var(--dot); }
+    .detail-nav-btn { font-size: 12px; color: var(--muted); cursor: pointer; background: none; border: none; font-family: var(--mono); padding: 0; transition: color 0.15s; letter-spacing: 0.04em; }
+    .detail-nav-btn:hover { color: var(--text); }
+    .detail-nav-btn:disabled { opacity: 0.2; cursor: default; }
+
     @media (max-width: 720px) {
-      .layout {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 36px 24px 80px;
-      }
+      #view-index .layout { grid-template-columns: 1fr; gap: 40px; padding: 36px 24px 80px; }
       .sidebar { position: static; }
       .hero-name { font-size: 48px; }
       .photo-wrap { max-width: 200px; }
       .live-clock { top: 36px; right: 24px; }
+      #view-detail { padding: 36px 24px 80px; }
+      .detail-title { font-size: 36px; }
     }
   </style>
 </head>
 <body>
-  <!-- Live clock -->
+
   <div class="live-clock">
     <span class="clock-time" id="clock-time"></span>
     <span class="clock-label">Bay Area, CA</span>
   </div>
-  <div class="layout">
-    <!-- ── LEFT SIDEBAR ── -->
-    <aside class="sidebar">
-      <div class="hero-name" id="hero-name-wrap">
-        <span id="typewriter-name"></span>
-      </div>
-      <div class="hero-tagline fade-in" id="tagline">Building markets, agents, and coordination systems for collective intelligence.</div>
-      <div class="top-email fade-in" id="email-line">
-        <span id="typewriter-email"></span><span class="cursor-blink" id="cursor-blink-email">|</span>
-      </div>
-      <img src="headshot.png" alt="Angel Yeung" class="photo-wrap fade-in">
-      <div class="section fade-in">
-        <div class="sidebar-section-title">ELSEWHERE</div>
-        <div class="elsewhere">
-          <a href="https://x.com/angelyeung111" target="_blank" class="ext-link">x <span class="arr">↗</span></a>
-          <a href="https://linkedin.com/in/angelyeung1" target="_blank" class="ext-link">linkedin <span class="arr">↗</span></a>
-          <a href="https://github.com/blackswan0412" target="_blank" class="ext-link">github <span class="arr">↗</span></a>
+
+  <!-- ══ INDEX VIEW ══ -->
+  <div id="view-index" class="view active">
+    <div class="layout">
+
+      <aside class="sidebar">
+        <div class="hero-name"><span id="typewriter-name"></span></div>
+        <div class="hero-tagline fade-in">Building markets, agents, and coordination systems for collective intelligence.</div>
+        <div class="top-email fade-in" id="email-line">
+          <span id="typewriter-email"></span><span class="cursor-blink" id="cursor-blink-email">|</span>
         </div>
-      </div>
-    </aside>
-    <!-- ── RIGHT CONTENT ── -->
-    <main class="content">
-      <!-- CURRENTLY -->
-      <div class="section fade-in">
-        <div class="section-title">Currently</div>
-        <hr class="dotted-rule">
-        <div class="entry-list">
-          <div class="entry">
-            <div class="entry-num">01</div>
-            <div class="entry-main">
-              Partnerships &amp; External Relations @
-              <a href="https://www.berkeleypse.com/" class="ilink">Pi Sigma Epsilon <span class="arr">↗</span></a>
-            </div>
-            <div class="entry-sub">Driving sponsorships, events, and industry connections for Berkeley's premier business fraternity</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">02</div>
-            <div class="entry-main">
-              Analytics &amp; Data Science @
-              <a href="https://berkeley.edu" target="_blank" class="ilink">UC Berkeley <span class="arr">↗</span></a>
-            </div>
-            <div class="entry-sub">Senior · Expected Graduation May 2027</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">03</div>
-            <div class="entry-main">
-              Independent Research — Prediction Markets &amp; Agent Systems
-            </div>
-            <div class="entry-sub">Studying how incentive design, automated agents, and on-chain settlement change the quality of collective forecasting</div>
-            <ul class="bullets">
-              <li>Designing experimental prediction markets with simulated and human participants</li>
-              <li>Building small forecasting agents that trade, calibrate, and interact inside those markets</li>
-              <li>Exploring blockchains as credible, permissionless coordination layers for many-participant bets</li>
-            </ul>
+        <img src="headshot.png" alt="Angel Yeung" class="photo-wrap fade-in">
+        <div class="section fade-in">
+          <div class="sidebar-section-title">ELSEWHERE</div>
+          <div class="elsewhere">
+            <a href="https://x.com/angelyeung111" target="_blank" class="ext-link">x <span class="arr">↗</span></a>
+            <a href="https://linkedin.com/in/angelyeung1" target="_blank" class="ext-link">linkedin <span class="arr">↗</span></a>
+            <a href="https://github.com/blackswan0412" target="_blank" class="ext-link">github <span class="arr">↗</span></a>
           </div>
         </div>
-      </div>
+      </aside>
 
-      <!-- NARRATIVE / ABOUT -->
-      <div class="section fade-in">
-        <div class="section-title">Throughline</div>
-        <hr class="dotted-rule">
-        <p style="max-width: 65ch; font-size: 14px; line-height: 1.65; color: var(--text);">
-          I study systems that turn distributed uncertainty into useful signal. The thread running through my work is this: 
-          how do you build infrastructure that makes <strong>collective reasoning legible and improvable</strong>?
-        </p>
-        <br>
-        <p style="max-width: 65ch; font-size: 14px; line-height: 1.65; color: var(--text);">
-          My current answer has three parts. <strong>Prediction markets</strong> as the mechanism — they force honest belief expression and aggregate it into prices. 
-          <strong>Agent-based simulation</strong> as the laboratory — synthetic populations of forecasters let you stress-test market designs, study calibration failure, and run experiments you can't run on humans. 
-          <strong>Blockchains</strong> as the settlement layer — credible commitment, transparent rules, and permissionless access remove the friction that keeps prediction markets small and centralized.
-        </p>
-        <br>
-        <p style="max-width: 65ch; font-size: 14px; line-height: 1.65; color: var(--text);">
-          Earlier work on social products, mental health AI, and consumer behavior gave me the human side of the equation: 
-          how incentive structures warp behavior, how people engage with uncertainty, and why so many coordination tools fail the people they're supposed to serve. 
-          That context is why I care about getting the mechanism design right — not just building markets, but building markets that <em>work</em>.
-        </p>
-      </div>
+      <main class="content">
 
-      <!-- PREVIOUSLY -->
-      <div class="section fade-in">
-        <div class="section-title">Previously</div>
-        <hr class="dotted-rule">
-        <div class="entry-list">
-          <div class="entry">
-            <div class="entry-num">01</div>
-            <div class="entry-main">
-              AI Product Fellow @
-              <a href="https://med.stanford.edu/psychiatry.html" class="ilink">Stanford Medicine <span class="arr">↗</span></a>
+        <!-- CURRENTLY -->
+        <div class="section fade-in">
+          <div class="section-title">Currently</div>
+          <hr class="dotted-rule">
+          <div class="entry-list">
+
+            <div class="entry">
+              <div class="entry-num">01</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="wrodium">Product Lead, Predictions @
+                  <a href="https://wrodium.com" target="_blank" class="ilink" onclick="event.stopPropagation()">Wrodium <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Predictive AI-visibility scoring, uplift modeling, and citation-risk forecasting</div>
             </div>
-            <div class="entry-sub">Co-developed an AI-powered mental health tool from research to early prototype</div>
-            <ul class="bullets">
-              <li>Defined product strategy, clinical UX, and go-to-market approach</li>
-              <li>Led user research on how people engage with AI around sensitive personal decisions</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <div class="entry-num">02</div>
-            <div class="entry-main">
-              Marketing &amp; Growth @
-              <a href="https://www.gamerplug.app/en" class="ilink">GamerPlug <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">02</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="berkeley-research">Undergraduate Researcher @
+                  <a href="https://cdss.berkeley.edu" target="_blank" class="ilink" onclick="event.stopPropagation()">UC Berkeley CDSS <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Adversarial data injection &amp; prediction-market efficiency · Feb 2026 – Present</div>
             </div>
-            <div class="entry-sub">Social matchmaking platform for gamers</div>
-            <ul class="bullets">
-              <li>Designed interaction-first acquisition and retention loops</li>
-              <li>Focused on authentic connection rather than viral dopamine hits</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <div class="entry-num">03</div>
-            <div class="entry-main">
-              Customer Research Intern @ Nissan
+
+            <div class="entry">
+              <div class="entry-num">03</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="pse">External Relations &amp; Partnerships @
+                  <a href="https://www.berkeleypse.com/" target="_blank" class="ilink" onclick="event.stopPropagation()">Pi Sigma Epsilon <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Driving sponsorships, events, and industry connections for Berkeley's premier business fraternity</div>
             </div>
-            <div class="entry-sub">Qualitative + quantitative studies on decision-making and brand perception</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">04</div>
-            <div class="entry-main">
-              Sales Associate @ Tory Burch
+
+            <div class="entry">
+              <div class="entry-num">04</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="berkeley-degree">Analytics &amp; Data Science @
+                  <a href="https://berkeley.edu" target="_blank" class="ilink" onclick="event.stopPropagation()">UC Berkeley <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">B.A. · Decision Systems · GPA 3.8 · Expected May 2027</div>
             </div>
-            <div class="entry-sub">High-touch client experience and real-time reading of human needs</div>
+
           </div>
         </div>
-      </div>
 
-      <!-- PROJECTS -->
-      <div class="section fade-in">
-        <div class="section-title">Projects &amp; Research</div>
-        <hr class="dotted-rule">
-        <div class="entry-list">
-          <div class="entry">
-            <div class="entry-num">01</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">On-Chain Prediction Market Sandbox <span class="arr">↗</span></a>
+        <!-- THROUGHLINE -->
+        <div class="section fade-in">
+          <div class="section-title">Throughline</div>
+          <hr class="dotted-rule">
+          <p style="max-width:65ch;font-size:14px;line-height:1.65;color:var(--text);">
+            I study systems that turn distributed uncertainty into useful signal. The thread running through my work is this:
+            how do you build infrastructure that makes <strong>collective reasoning legible and improvable</strong>?
+          </p>
+          <br>
+          <p style="max-width:65ch;font-size:14px;line-height:1.65;color:var(--text);">
+            My current answer has three parts. <strong>Prediction markets</strong> as the mechanism — they force honest belief expression and aggregate it into prices.
+            <strong>Agent-based simulation</strong> as the laboratory — synthetic populations of forecasters let you stress-test market designs, study calibration failure, and run experiments you can't run on humans.
+            <strong>Blockchains</strong> as the settlement layer — credible commitment, transparent rules, and permissionless access remove the friction that keeps prediction markets small and centralized.
+          </p>
+          <br>
+          <p style="max-width:65ch;font-size:14px;line-height:1.65;color:var(--text);">
+            Earlier work on social products, mental health AI, and consumer behavior gave me the human side of the equation:
+            how incentive structures warp behavior, how people engage with uncertainty, and why so many coordination tools fail the people they're supposed to serve.
+            That context is why I care about getting the mechanism design right — not just building markets, but building markets that <em>work</em>.
+          </p>
+        </div>
+
+        <!-- PREVIOUSLY -->
+        <div class="section fade-in">
+          <div class="section-title">Previously</div>
+          <hr class="dotted-rule">
+          <div class="entry-list">
+
+            <div class="entry">
+              <div class="entry-num">01</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="stanford">AI Product Fellow @
+                  <a href="https://med.stanford.edu/psychiatry.html" target="_blank" class="ilink" onclick="event.stopPropagation()">Stanford Medicine <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Co-developed an AI-powered mental health tool from research to early prototype</div>
+              <ul class="bullets">
+                <li>Defined product strategy, clinical UX, and go-to-market approach</li>
+                <li>Led user research on how people engage with AI around sensitive personal decisions</li>
+              </ul>
             </div>
-            <div class="entry-sub">Experimental market system — in progress</div>
-            <ul class="bullets">
-              <li>Designing resolution rules, liquidity mechanisms, and fee structures from scratch</li>
-              <li>Deploying contracts on an L2 testnet to support many small-stake bets with low friction</li>
-              <li>Measuring calibration and liquidity behavior across simulated and human participant pools</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <div class="entry-num">02</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Forecasting Agent Simulator <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">02</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="gamerplug">Marketing &amp; Growth @
+                  <a href="https://www.gamerplug.app/en" target="_blank" class="ilink" onclick="event.stopPropagation()">GamerPlug <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Social matchmaking platform for gamers</div>
+              <ul class="bullets">
+                <li>Designed interaction-first acquisition and retention loops</li>
+                <li>Focused on authentic connection rather than viral dopamine hits</li>
+              </ul>
             </div>
-            <div class="entry-sub">Agent-based simulation sandbox for market stress-testing</div>
-            <ul class="bullets">
-              <li>Building populations of synthetic traders with varied calibration profiles and update rules</li>
-              <li>Running experiments on how mechanism design (scoring rules, market makers, subsidies) changes aggregate accuracy</li>
-              <li>Studying how human forecasters behave differently from algorithmic ones inside the same market</li>
-            </ul>
-          </div>
-          <div class="entry">
-            <div class="entry-num">03</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Linguistic Twin <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">03</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="nissan">Customer Research Intern @ Nissan<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Qualitative + quantitative studies on decision-making and brand perception</div>
             </div>
-            <div class="entry-sub">AI system for preserving and extending personal voice, memory, and identity over time</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">04</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Showcase Build Sprint <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">04</div>
+              <div class="entry-main">Sales Associate @ Tory Burch</div>
+              <div class="entry-sub">High-touch client experience and real-time reading of human needs</div>
             </div>
-            <div class="entry-sub">Led campus-wide case competition to drive adoption of a student portfolio platform</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">05</div>
-            <div class="entry-main">
-              Kikoff Strategy Case
-            </div>
-            <div class="entry-sub">End-to-end consulting deliverable (deck + risk analysis) for credit-building fintech</div>
+
           </div>
         </div>
-      </div>
 
-      <!-- WRITING -->
-      <div class="section fade-in">
-        <div class="section-title">Writing</div>
-        <hr class="dotted-rule">
-        <div class="entry-list">
-          <div class="entry">
-            <div class="entry-num">01</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Why Social Platforms Became Loneliness Brokers <span class="arr">↗</span></a>
+        <!-- PROJECTS -->
+        <div class="section fade-in">
+          <div class="section-title">Projects &amp; Research</div>
+          <hr class="dotted-rule">
+          <div class="entry-list">
+
+            <div class="entry">
+              <div class="entry-num">01</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="sonder">Sonder OS @
+                  <a href="https://foundersinc.com" target="_blank" class="ilink" onclick="event.stopPropagation()">Founders Inc <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Personal AI decision assistant over a relational knowledge graph · Mar 2026 – Present</div>
             </div>
-            <div class="entry-sub">Incentive structures that optimize for engagement over connection — and what better-designed systems would look like</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">02</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Anti-Stagnation Technology <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">02</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="pm-research">Prediction Market Forecasting Research<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Price discovery under information asymmetry · UC Berkeley · Feb 2026 – Present</div>
             </div>
-            <div class="entry-sub">Tools that pull us outward into the world and into better decisions</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">03</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">Prediction Markets as Coordination Infrastructure <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">03</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="onchain">On-Chain Prediction Market Sandbox<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Experimental market system — in progress</div>
+              <ul class="bullets">
+                <li>Designing resolution rules, liquidity mechanisms, and fee structures from scratch</li>
+                <li>Deploying contracts on an L2 testnet to support many small-stake bets with low friction</li>
+                <li>Measuring calibration and liquidity behavior across simulated and human participant pools</li>
+              </ul>
             </div>
-            <div class="entry-sub">How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure — in progress</div>
-          </div>
-          <div class="entry">
-            <div class="entry-num">04</div>
-            <div class="entry-main">
-              <a href="#" class="ilink">What Bots Reveal About Human Forecasters <span class="arr">↗</span></a>
+
+            <div class="entry">
+              <div class="entry-num">04</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="pm-research">Forecasting Agent Simulator<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Agent-based simulation sandbox for market stress-testing</div>
+              <ul class="bullets">
+                <li>Building populations of synthetic traders with varied calibration profiles and update rules</li>
+                <li>Running experiments on how mechanism design changes aggregate accuracy</li>
+                <li>Studying how human forecasters behave differently from algorithmic ones inside the same market</li>
+              </ul>
             </div>
-            <div class="entry-sub">Running algorithmic agents alongside humans in the same market exposes calibration failures that surveys never catch — in progress</div>
+
+            <div class="entry">
+              <div class="entry-num">05</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="kikoff">Kikoff Strategy Case<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">End-to-end consulting deliverable (deck + risk analysis) for credit-building fintech</div>
+            </div>
+
           </div>
         </div>
-      </div>
 
-      <div class="big-line fade-in">MARKETS, AGENTS,<br>COORDINATION.</div>
-    </main>
+        <!-- WRITING -->
+        <div class="section fade-in">
+          <div class="section-title">Writing</div>
+          <hr class="dotted-rule">
+          <div class="entry-list">
+
+            <div class="entry">
+              <div class="entry-num">01</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="writing-loneliness">Why Social Platforms Became Loneliness Brokers<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Incentive structures that optimize for engagement over connection — and what better-designed systems would look like</div>
+            </div>
+
+            <div class="entry">
+              <div class="entry-num">02</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="writing-stagnation">Anti-Stagnation Technology<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Tools that pull us outward into the world and into better decisions</div>
+            </div>
+
+            <div class="entry">
+              <div class="entry-num">03</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="writing-pm">Prediction Markets as Coordination Infrastructure<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure — in progress</div>
+            </div>
+
+            <div class="entry">
+              <div class="entry-num">04</div>
+              <div class="entry-main">
+                <span class="sublink" data-id="writing-bots">What Bots Reveal About Human Forecasters<span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Running algorithmic agents alongside humans in the same market exposes calibration failures that surveys never catch — in progress</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="big-line fade-in">MARKETS, AGENTS,<br>COORDINATION.</div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ══ DETAIL VIEW ══ -->
+  <div id="view-detail" class="view">
+    <button class="back-btn" id="back-btn">← index</button>
+    <div id="detail-content"></div>
+    <div class="detail-nav">
+      <button class="detail-nav-btn" id="prev-btn">← prev</button>
+      <button class="detail-nav-btn" id="next-btn">next →</button>
+    </div>
   </div>
 
   <script>
-    window.addEventListener("load", () => {
-      // ── Typewriter: name (100ms/char, each word on its own line) ──
-      const nameParts = ["Angel", "Yeung"];
-      const nameEl = document.getElementById("typewriter-name");
-      let charIndex = 0;
-      let wordIndex = 0;
-      function typeName() {
-        if (wordIndex < nameParts.length) {
-          const word = nameParts[wordIndex];
-          if (charIndex < word.length) {
-            nameEl.textContent += word[charIndex];
-            charIndex++;
-            setTimeout(typeName, 100);
-          } else {
-            wordIndex++;
-            charIndex = 0;
-            if (wordIndex < nameParts.length) {
-              nameEl.appendChild(document.createElement("br"));
-              setTimeout(typeName, 120);
-            } else {
-              setTimeout(typeEmail, 300);
-            }
-          }
-        }
+  const ENTRIES = {
+    wrodium: {
+      eyebrow: 'Currently · Jan 2025 – Present',
+      title: 'Product Lead,\nPredictions',
+      meta: ['Wrodium', 'AI Visibility & GEO Platform', 'Berkeley, CA'],
+      externalUrl: 'https://wrodium.com',
+      externalLabel: 'wrodium.com',
+      sections: [
+        { label: 'Context', text: 'Wrodium helps companies understand and improve how AI systems cite their content — Generative Engine Optimization. I joined as the first product hire focused on the predictions layer: turning audit telemetry into forward-looking signals about citation risk and opportunity. Existing tooling told clients what was happening to their AI visibility, not what would happen next.' },
+        { label: 'What I Built', text: 'A predictive scoring layer over relational prompt-telemetry data — modeling the probability a given page gets cited for a given prompt across a rolling temporal window. An uplift modeling framework that estimates per-fix marginal lift across schema, evidence, and authority interventions, converting vague prioritization into a ranked, ROI-driven backlog. Competitive risk forecasting over prompt × competitor × time graphs, surfacing drift and regime shifts in AI Overview rankings before they materialize.' },
+        { label: 'Process', text: 'Interviewed 20+ operators and engineers to map how teams actually consumed audit data, then worked backwards to define what a decision-useful prediction looks like. Defined evaluation methodology preventing temporal leakage between audit signals and citation outcomes — a subtle validity problem prior tooling ignored entirely.' },
+      ],
+      tags: ['Uplift Modeling', 'Temporal Risk Forecasting', 'Product Strategy', 'User Research', 'Python'],
+    },
+    'berkeley-research': {
+      eyebrow: 'Currently · Feb 2026 – Present',
+      title: 'Undergraduate\nResearcher',
+      meta: ['UC Berkeley CDSS', 'School of Computing, Data Science & Society'],
+      externalUrl: 'https://cdss.berkeley.edu',
+      externalLabel: 'cdss.berkeley.edu',
+      sections: [
+        { label: 'Question', text: 'What happens to prediction markets when the data feeding them is noisy or adversarially manipulated? As automated agents become significant market participants, how much manipulation degrades the calibrated probabilities and accurate price discovery a market is supposed to produce?' },
+        { label: 'Approach', text: 'Built Python ingestion pipelines for high-frequency market data with leakage-controlled train/test splits and entity-level deduplication across temporally connected events — a non-trivial problem when the same real-world outcome touches hundreds of related questions. Running controlled injection experiments to measure calibration degradation and Brier score under different manipulation regimes.' },
+        { label: 'Ethics Auditing', text: 'Conducting ethics audits on crowdsourced datasets used to resolve markets, identifying systemic label-quality failures that propagate into model evaluation and downstream robustness.' },
+      ],
+      tags: ['Prediction Markets', 'Calibration / Brier Score', 'Adversarial Data', 'Python / Pandas', 'Ethics Auditing'],
+    },
+    pse: {
+      eyebrow: 'Currently · Nov 2025 – Present',
+      title: 'External Relations\n& Partnerships',
+      meta: ['Pi Sigma Epsilon', "UC Berkeley's Premier Business Fraternity"],
+      externalUrl: 'https://www.berkeleypse.com/',
+      externalLabel: 'berkeleypse.com',
+      metrics: [{ val: '10+', label: 'Corporate Partnerships Closed' }, { val: '$100M+', label: 'GTM Strategy Presented' }, { val: '5+', label: 'Fintech Due Diligence Reviews' }],
+      sections: [
+        { label: 'Role', text: "Responsible for the chapter's external relationships: sourcing corporate partners, closing sponsorships, and building the industry connections that give our 50+ member chapter access to real work." },
+        { label: 'Outcomes', text: 'Sourced and closed partnerships with Paramount and Nissan, securing sponsorships for technical workshops. Presented a $100M+ GTM strategy to Goldman Sachs leadership and ran due diligence on five-plus fintech firms — evaluating CAC/LTV ratios, revenue model sustainability, and risk-adjusted growth. Live analyses with stakeholders in the room.' },
+        { label: 'Finance Work', text: 'Advised finance stakeholders on integrating AI/ML workflows into traditional financial ops. Analyzed credit risk, underwriting models, and unit economics as part of the due diligence process.' },
+      ],
+      tags: ['Corporate Partnerships', 'Due Diligence', 'GTM Strategy', 'Fintech', 'AI/ML Advisory'],
+    },
+    'berkeley-degree': {
+      eyebrow: 'Expected May 2027',
+      title: 'B.A. Analytics,\nDecision Systems',
+      meta: ['UC Berkeley', 'GPA 3.8 · Major GPA 4.0'],
+      externalUrl: 'https://berkeley.edu',
+      externalLabel: 'berkeley.edu',
+      sections: [
+        { label: 'Concentration', text: "Decision Systems — how incentive structures shape choices, how to evaluate a system's outputs when ground truth is contested, and how to build infrastructure that makes collective reasoning legible." },
+        { label: 'Coursework', text: 'Probability & Statistics, Computational Structures in Data Science, Data & Justice, Full-Stack Development (Python, JavaScript, React), Multivariable Calculus, Discrete Math.' },
+      ],
+      tags: ['Python', 'JavaScript', 'React', 'Statistics', 'Data Science'],
+    },
+    stanford: {
+      eyebrow: 'Previously',
+      title: 'AI Product Fellow',
+      meta: ['Stanford Medicine', 'Department of Psychiatry'],
+      externalUrl: 'https://med.stanford.edu/psychiatry.html',
+      externalLabel: 'med.stanford.edu',
+      sections: [
+        { label: 'Context', text: "Co-developed an AI-powered mental health tool from research concept to early prototype. The team had promising clinical research but no product strategy, no UX framework, and no clear understanding of how potential users would engage with an AI around sensitive personal decisions." },
+        { label: 'What I Did', text: "Defined product strategy and go-to-market approach, designed the clinical UX, and led user research. People's relationship with AI in emotionally sensitive contexts is deeply different from general task-completion scenarios. Trust, disclosure thresholds, and the perceived stakes of a \"wrong\" AI response all operate differently here. Those findings directly shaped what the prototype emphasized — and what it explicitly didn't try to do." },
+        { label: 'Lasting Insight', text: 'Getting the incentive structure wrong in a coordination tool produces bad forecasts. Getting it wrong in a mental health product produces harm. The discipline of getting mechanism design right transfers across both.' },
+      ],
+      tags: ['Product Strategy', 'Clinical UX', 'User Research', 'AI', 'Go-to-Market'],
+    },
+    gamerplug: {
+      eyebrow: 'Previously',
+      title: 'Marketing\n& Growth',
+      meta: ['GamerPlug', 'Social Matchmaking Platform for Gamers'],
+      externalUrl: 'https://www.gamerplug.app/en',
+      externalLabel: 'gamerplug.app',
+      sections: [
+        { label: 'Context', text: 'GamerPlug is a social matchmaking app built around genuine connection rather than algorithmic engagement loops — which made thinking about acquisition and retention meaningfully harder than at a typical consumer startup.' },
+        { label: 'The Design Tension', text: "Metrics that optimize for engagement often work against connection. I spent most of my time here finding acquisition and retention loops that were interaction-first — where the unit of success was a match that led to a real game session, not a session that kept a user scrolling. Designing around that distinction required different intuitions than standard growth playbooks offer." },
+      ],
+      tags: ['Growth Strategy', 'Retention Design', 'Incentive Alignment', 'Consumer Social'],
+    },
+    nissan: {
+      eyebrow: 'Previously',
+      title: 'Customer Research\nIntern',
+      meta: ['Nissan', 'Qualitative + Quantitative Research'],
+      sections: [
+        { label: 'Work', text: "Conducted mixed-methods studies on decision-making and brand perception — first systematic exposure to how qualitative insight and quantitative signal either corroborate or contradict each other, and what to do when they don't agree." },
+      ],
+      tags: ['Mixed Methods', 'Consumer Research', 'Brand Perception', 'Decision Making'],
+    },
+    sonder: {
+      eyebrow: 'Project · Mar 2026 – Present',
+      title: 'Sonder OS',
+      meta: ['Founders Inc', 'Personal AI Decision Assistant'],
+      sections: [
+        { label: 'The Problem', text: "Most AI assistants treat your information as a flat pile of text. The interesting reasoning happens across connections — between a calendar commitment and an email thread, between a past decision and a current investment thesis. Flat-index RAG cannot answer multi-hop questions because it has no model of how your information is related." },
+        { label: 'What I Built', text: "A unified ~10,000-item vector index over emails, documents, calendar, notes, and crawled web content. GraphRAG-style retrieval over entity–relation extractions enables multi-hop queries across connected sources. Multi-agent workflows for research, planning, and investing decisions, with agent traces evaluated for calibration and faithfulness against held-out outcomes." },
+        { label: 'Open Question', text: "The faithfulness evaluation piece is what I find most interesting — it's essentially a calibration problem for agents. When does an agent's stated reasoning actually reflect the path it took? That question connects directly back to my prediction-market research." },
+      ],
+      tags: ['GraphRAG', 'Multi-Agent', 'Graph Transformers', 'PyTorch / PyG', 'Semantic Retrieval'],
+    },
+    'pm-research': {
+      eyebrow: 'Project · Feb 2026 – Present',
+      title: 'Prediction Market\nForecasting\nResearch',
+      meta: ['UC Berkeley', 'Price discovery under information asymmetry'],
+      metrics: [{ val: '3', label: 'Market Configs Modeled' }, { val: '8yr', label: 'Financial Benchmark Dataset' }],
+      sections: [
+        { label: 'Approach', text: "Modeled price discovery across three market configurations using Brier score decomposition (reliability–resolution–uncertainty) and calibration analysis benchmarked against eight years of financial data. A market can appear well-calibrated on aggregate while failing badly on resolution — producing confident, wrong prices." },
+        { label: 'Parallel Work', text: "Built mean-reversion strategies on historical equity and FX data, evaluating Sharpe and Max Drawdown across regimes. Goal: regime-shift detection and protection against in-sample leakage — the same temporal validity problem that appears in the Wrodium work. It's everywhere in time-series evaluation and almost always underspecified." },
+      ],
+      tags: ['Brier Decomposition', 'Calibration Analysis', 'Regime Detection', 'Backtesting', 'Python'],
+    },
+    onchain: {
+      eyebrow: 'Project · In Progress',
+      title: 'On-Chain Prediction\nMarket Sandbox',
+      meta: ['Mechanism design from scratch', 'L2 Testnet'],
+      sections: [
+        { label: 'Motivation', text: "Designing a prediction market system from the resolution rules up — not using an existing platform, but building the mechanism to understand where standard designs fail." },
+        { label: 'Design Questions', text: "Resolution rules robust to ambiguous real-world outcomes. Liquidity mechanisms that don't require a well-capitalized market maker. Fee structures that don't punish small-stake bettors. Deploying contracts on an L2 testnet — the current fee environment on mainnet makes sub-$100 markets economically absurd." },
+        { label: 'Measurement', text: "Calibration and liquidity behavior across simulated and human participant pools. Where do humans and synthetic agents diverge, and what does that divergence reveal about the mechanism?" },
+      ],
+      tags: ['Smart Contracts', 'L2 / Testnet', 'Mechanism Design', 'Liquidity Design', 'Calibration'],
+    },
+    kikoff: {
+      eyebrow: 'Project · Feb 2026',
+      title: 'Kikoff Fintech\nCase Competition',
+      meta: ['UC Berkeley', 'Credit-Building Fintech'],
+      metrics: [{ val: '$40M', label: 'Opportunity Identified' }, { val: '12%', label: 'Projected Default Rate Reduction' }],
+      sections: [
+        { label: 'Work', text: "End-to-end consulting deliverable for Kikoff. Identified a $40M subprime credit opportunity for thin-file users and built a quantitative risk model projecting a 12% reduction in default rates via calibrated underwriting." },
+        { label: 'Core Insight', text: "Thin-file users aren't uniformly risky — their risk is just harder to measure with traditional features. Stability-aware feature design and risk-adjusted unit economics reframed the underwriting problem as a calibration challenge rather than a screening problem." },
+      ],
+      tags: ['Credit Risk', 'Underwriting', 'Quantitative Modeling', 'Unit Economics', 'Fintech'],
+    },
+    'writing-loneliness': {
+      eyebrow: 'Writing',
+      title: 'Why Social Platforms\nBecame Loneliness\nBrokers',
+      meta: [],
+      sections: [
+        { label: 'Argument', text: "An examination of the incentive structures that optimize for engagement over connection — and what better-designed systems would look like. The GamerPlug work gave concrete examples of where the standard growth playbook diverges from what users actually want." },
+        { label: 'Thesis', text: "Platforms didn't become loneliness brokers through malice. They became loneliness brokers through measurement: they optimize for what they can count, and connection is harder to count than time-on-site." },
+      ],
+      tags: ['Incentive Design', 'Social Products', 'Platform Dynamics'],
+    },
+    'writing-stagnation': {
+      eyebrow: 'Writing',
+      title: 'Anti-Stagnation\nTechnology',
+      meta: [],
+      sections: [
+        { label: 'Argument', text: "Tools that pull us outward into the world and into better decisions, rather than optimizing for continued platform engagement. A case for designing technology around behavioral outcomes rather than session metrics." },
+      ],
+      tags: ['Technology Design', 'Behavioral Outcomes', 'Product Philosophy'],
+    },
+    'writing-pm': {
+      eyebrow: 'Writing · In Progress',
+      title: 'Prediction Markets\nas Coordination\nInfrastructure',
+      meta: [],
+      sections: [
+        { label: 'Argument', text: "How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure. The bottleneck isn't interest or information — it's mechanism quality and settlement friction." },
+      ],
+      tags: ['Prediction Markets', 'Mechanism Design', 'Blockchain', 'Coordination'],
+    },
+    'writing-bots': {
+      eyebrow: 'Writing · In Progress',
+      title: 'What Bots Reveal\nAbout Human\nForecasters',
+      meta: [],
+      sections: [
+        { label: 'Argument', text: "Running algorithmic agents alongside humans in the same market exposes calibration failures that surveys never catch. When a bot with a known update rule consistently outperforms a human on the same question class, that's information about where human reasoning goes wrong — not just about the bot's performance." },
+      ],
+      tags: ['Calibration', 'Agent-Based Modeling', 'Human Judgment', 'Forecasting'],
+    },
+  };
+
+  const ORDER = Object.keys(ENTRIES);
+
+  function renderDetail(id) {
+    const e = ENTRIES[id];
+    if (!e) return;
+    const titleHtml = e.title.split('\n').join('<br>');
+    const metaHtml = e.meta.map(m => `<span>${m}</span>`).join('');
+    const extHtml = e.externalUrl
+      ? `<a href="${e.externalUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px dotted var(--link-dot);margin-top:16px;margin-bottom:40px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--muted)'">${e.externalLabel} <span style="font-size:10px;opacity:0.65">↗</span></a>`
+      : '<div style="margin-bottom:40px"></div>';
+    const metricsHtml = e.metrics
+      ? `<div class="metric-row">${e.metrics.map(m => `<div><span class="metric-val">${m.val}</span><span class="metric-label">${m.label}</span></div>`).join('')}</div>`
+      : '';
+    const sectionsHtml = e.sections.map((s, i) =>
+      `${i > 0 ? '<hr class="detail-hr">' : ''}<div class="detail-section"><div class="detail-label">${s.label}</div><p class="detail-text">${s.text}</p></div>`
+    ).join('');
+    const tagsHtml = e.tags ? `<div class="tag-row">${e.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : '';
+
+    document.getElementById('detail-content').innerHTML =
+      `<div class="detail-eyebrow">${e.eyebrow}</div>
+      <div class="detail-title">${titleHtml}</div>
+      <div class="detail-meta">${metaHtml}</div>
+      ${e.externalUrl ? extHtml : '<div style="margin-bottom:40px"></div>'}
+      ${metricsHtml}
+      ${sectionsHtml}
+      ${tagsHtml}`;
+
+    const idx = ORDER.indexOf(id);
+    document.getElementById('prev-btn').disabled = idx <= 0;
+    document.getElementById('next-btn').disabled = idx >= ORDER.length - 1;
+    document.getElementById('prev-btn').onclick = () => { renderDetail(ORDER[idx - 1]); window.scrollTo(0,0); };
+    document.getElementById('next-btn').onclick = () => { renderDetail(ORDER[idx + 1]); window.scrollTo(0,0); };
+  }
+
+  function showDetail(id) {
+    renderDetail(id);
+    document.getElementById('view-index').classList.remove('active');
+    document.getElementById('view-detail').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+  function showIndex() {
+    document.getElementById('view-detail').classList.remove('active');
+    document.getElementById('view-index').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // sublinks open detail page (clicking the ↗ ilink inside them opens external instead)
+  document.querySelectorAll('.sublink').forEach(el => {
+    el.addEventListener('click', () => showDetail(el.dataset.id));
+  });
+  document.getElementById('back-btn').addEventListener('click', showIndex);
+
+  // typewriter + clock
+  window.addEventListener('load', () => {
+    const nameParts = ['Angel', 'Yeung'];
+    const nameEl = document.getElementById('typewriter-name');
+    let ci = 0, wi = 0;
+    function typeName() {
+      if (wi < nameParts.length) {
+        const w = nameParts[wi];
+        if (ci < w.length) { nameEl.textContent += w[ci++]; setTimeout(typeName, 100); }
+        else { wi++; ci = 0; if (wi < nameParts.length) { nameEl.appendChild(document.createElement('br')); setTimeout(typeName, 120); } else setTimeout(typeEmail, 300); }
       }
-      // ── Typewriter: email (50ms/char) ──
-      function typeEmail() {
-        const email = "angelyeung@berkeley.edu";
-        const emailEl = document.getElementById("typewriter-email");
-        const emailCursor = document.getElementById("cursor-blink-email");
-        const emailLine = document.getElementById("email-line");
-        let j = 0;
-        emailLine.classList.add("fade-in--visible");
-        function typeChar() {
-          if (j < email.length) {
-            emailEl.textContent += email[j];
-            j++;
-            setTimeout(typeChar, 50);
-          } else {
-            setTimeout(() => {
-              emailCursor.classList.add("done");
-              startFadeIns();
-            }, 400);
-          }
-        }
-        typeChar();
-      }
-      // ── Staggered fade-in for everything else ──
-      function startFadeIns() {
-        const elements = [...document.querySelectorAll(".fade-in")]
-          .filter(el => el.id !== "email-line");
-        elements.forEach((el, index) => {
-          setTimeout(() => {
-            el.classList.add("fade-in--visible");
-          }, 300 * index);
-        });
-      }
-      setTimeout(typeName, 200);
-      // ── Live clock — Bay Area ──
-      function updateClock() {
-        const time = new Date().toLocaleTimeString('en-US', {
-          timeZone: 'America/Los_Angeles',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
-        });
-        document.getElementById('clock-time').textContent = time;
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-    });
+    }
+    function typeEmail() {
+      const email = 'angelyeung@berkeley.edu', el = document.getElementById('typewriter-email');
+      const cursor = document.getElementById('cursor-blink-email'), line = document.getElementById('email-line');
+      let j = 0; line.classList.add('fade-in--visible');
+      function tc() { if (j < email.length) { el.textContent += email[j++]; setTimeout(tc, 50); } else setTimeout(() => { cursor.classList.add('done'); startFadeIns(); }, 400); }
+      tc();
+    }
+    function startFadeIns() {
+      [...document.querySelectorAll('.fade-in')].filter(el => el.id !== 'email-line')
+        .forEach((el, i) => setTimeout(() => el.classList.add('fade-in--visible'), 300 * i));
+    }
+    setTimeout(typeName, 200);
+    function tick() {
+      document.getElementById('clock-time').textContent = new Date().toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    }
+    tick(); setInterval(tick, 1000);
+  });
   </script>
 </body>
 </html>
