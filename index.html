@@ -167,11 +167,15 @@
             <div class="entry">
               <div class="entry-num">02</div>
               <div class="entry-main">
-                <span class="sublink" data-id="berkeley-research">Undergraduate Researcher @
-                  <a href="https://cdss.berkeley.edu" target="_blank" class="ilink" onclick="event.stopPropagation()">UC Berkeley CDSS <span class="arr">↗</span></a>
+                <span class="sublink" data-id="numistoken">Product &amp; Research @
+                  <a href="https://numistoken.com" target="_blank" class="ilink" onclick="event.stopPropagation()">Numistoken <span class="arr">↗</span></a>
                 <span class="sarr">→</span></span>
               </div>
-              <div class="entry-sub">Adversarial data injection &amp; prediction-market efficiency · Feb 2026 – Present</div>
+              <div class="entry-sub">Tokenized assets and market microstructure experiments</div>
+              <ul class="bullets">
+                <li>Built and evaluated trading signals over on-chain and market data to inform token and strategy design</li>
+                <li>Worked across product and engineering on mechanism design, liquidity incentives, and risk frameworks for new financial primitives</li>
+              </ul>
             </div>
 
             <div class="entry">
@@ -228,6 +232,16 @@
             <div class="entry">
               <div class="entry-num">01</div>
               <div class="entry-main">
+                <span class="sublink" data-id="berkeley-research">Undergraduate Researcher @
+                  <a href="https://cdss.berkeley.edu" target="_blank" class="ilink" onclick="event.stopPropagation()">UC Berkeley CDSS <span class="arr">↗</span></a>
+                <span class="sarr">→</span></span>
+              </div>
+              <div class="entry-sub">Adversarial data injection &amp; prediction-market efficiency · Feb 2026 – May 2026</div>
+            </div>
+
+            <div class="entry">
+              <div class="entry-num">02</div>
+              <div class="entry-main">
                 <span class="sublink" data-id="stanford">AI Product Fellow @
                   <a href="https://med.stanford.edu/psychiatry.html" target="_blank" class="ilink" onclick="event.stopPropagation()">Stanford Medicine <span class="arr">↗</span></a>
                 <span class="sarr">→</span></span>
@@ -240,7 +254,7 @@
             </div>
 
             <div class="entry">
-              <div class="entry-num">02</div>
+              <div class="entry-num">03</div>
               <div class="entry-main">
                 <span class="sublink" data-id="gamerplug">Marketing &amp; Growth @
                   <a href="https://www.gamerplug.app/en" target="_blank" class="ilink" onclick="event.stopPropagation()">GamerPlug <span class="arr">↗</span></a>
@@ -254,7 +268,7 @@
             </div>
 
             <div class="entry">
-              <div class="entry-num">03</div>
+              <div class="entry-num">04</div>
               <div class="entry-main">
                 <span class="sublink" data-id="kikoff">Strategy Consultant @
                   <a href="https://kikoff.com/" target="_blank" class="ilink" onclick="event.stopPropagation()">Kikoff <span class="arr">↗</span></a>
@@ -264,7 +278,7 @@
             </div>
 
             <div class="entry">
-              <div class="entry-num">04</div>
+              <div class="entry-num">05</div>
               <div class="entry-main">Sales Associate @ Tory Burch</div>
               <div class="entry-sub">High-touch client experience and real-time reading of human needs</div>
             </div>
@@ -380,16 +394,29 @@
       ],
       tags: ['Uplift Modeling', 'Temporal Risk Forecasting', 'Product Strategy', 'User Research', 'Python'],
     },
+    numistoken: {
+      eyebrow: 'Currently',
+      title: 'AI\n& Machine Learning',
+      meta: ['Numistoken', 'Tokenized Assets & Market Microstructure'],
+      externalUrl: 'https://numistoken.com',
+      externalLabel: 'numistoken.com',
+      sections: [
+        { label: 'Context', text: 'Numistoken sits at the intersection of tokenized real-world assets and quantitative market microstructure. The work is about turning illiquid or opaque assets into instruments that can be priced, traded, and risk-managed with the same rigor as traditional financial primitives — without inheriting the friction those primitives carry.' },
+        { label: 'What I Do', text: 'Built and evaluated trading signals over on-chain and market data to inform token and strategy design — feature engineering across price, volume, holder distribution, and liquidity flow, then evaluating signal quality with proper temporal validation. Working across product and engineering on mechanism design, liquidity incentives, and risk frameworks for new financial primitives.' },
+        { label: 'Throughline', text: 'This is the same set of questions that shows up in my prediction-market work, applied to a different asset class. How do you design a mechanism that produces honest prices? How do you incentivize the liquidity provision that makes those prices meaningful? How do you measure when a market is working and when it is not?' },
+      ],
+      tags: ['Tokenization', 'Market Microstructure', 'Signal Research', 'Mechanism Design', 'On-Chain Data'],
+    },
     'berkeley-research': {
-      eyebrow: 'Currently · Feb 2026 – Present',
+      eyebrow: 'Previously · Feb 2026 – May 2026',
       title: 'Undergraduate\nResearcher',
       meta: ['UC Berkeley CDSS', 'School of Computing, Data Science & Society'],
       externalUrl: 'https://cdss.berkeley.edu',
       externalLabel: 'cdss.berkeley.edu',
       sections: [
         { label: 'Question', text: 'What happens to prediction markets when the data feeding them is noisy or adversarially manipulated? As automated agents become significant market participants, how much manipulation degrades the calibrated probabilities and accurate price discovery a market is supposed to produce?' },
-        { label: 'Approach', text: 'Built Python ingestion pipelines for high-frequency market data with leakage-controlled train/test splits and entity-level deduplication across temporally connected events — a non-trivial problem when the same real-world outcome touches hundreds of related questions. Running controlled injection experiments to measure calibration degradation and Brier score under different manipulation regimes.' },
-        { label: 'Ethics Auditing', text: 'Conducting ethics audits on crowdsourced datasets used to resolve markets, identifying systemic label-quality failures that propagate into model evaluation and downstream robustness.' },
+        { label: 'Approach', text: 'Built Python ingestion pipelines for high-frequency market data with leakage-controlled train/test splits and entity-level deduplication across temporally connected events — a non-trivial problem when the same real-world outcome touches hundreds of related questions. Ran controlled injection experiments to measure calibration degradation and Brier score under different manipulation regimes.' },
+        { label: 'Ethics Auditing', text: 'Conducted ethics audits on crowdsourced datasets used to resolve markets, identifying systemic label-quality failures that propagate into model evaluation and downstream robustness.' },
       ],
       tags: ['Prediction Markets', 'Calibration / Brier Score', 'Adversarial Data', 'Python / Pandas', 'Ethics Auditing'],
     },
@@ -491,15 +518,6 @@
         { label: 'Core Insight', text: "Thin-file users aren't uniformly risky — their risk is just harder to measure with traditional features. Stability-aware feature design and risk-adjusted unit economics reframed the underwriting problem as a calibration challenge rather than a screening problem." },
       ],
       tags: ['Credit Risk', 'Underwriting', 'Quantitative Modeling', 'Unit Economics', 'Fintech'],
-    },
-    'writing-pm': {
-      eyebrow: 'Writing · In Progress',
-      title: 'Prediction Markets\nas Coordination\nInfrastructure',
-      meta: [],
-      sections: [
-        { label: 'Argument', text: "How credible commitment, on-chain settlement, and agent-backed liquidity could turn forecasting from a niche hobby into public infrastructure. The bottleneck isn't interest or information — it's mechanism quality and settlement friction." },
-      ],
-      tags: ['Prediction Markets', 'Mechanism Design', 'Blockchain', 'Coordination'],
     },
     'writing-pm': {
       eyebrow: 'Writing · In Progress',
